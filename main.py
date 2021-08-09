@@ -1,7 +1,7 @@
 from flask import request, make_response, redirect, render_template, url_for, session
 from app import create_app
 from app.forms import LoginForm
-from flask_login import login_required
+from flask_login import login_required, current_user
 from app.firestore_service import get_users, get_todos
 import unittest
 
@@ -28,7 +28,7 @@ def index():
 @login_required
 def hello():
     user_ip = session.get('user_ip')
-    username = session.get('username')
+    username = current_user.id
 
     context = {
         'user_ip': user_ip,
@@ -36,10 +36,6 @@ def hello():
         'username': username
     }
     users = get_users()
-
-    for user in users:
-        print(user.id)
-        print(user.to_dict()['password'])
 
     return render_template('file.html', **context)
 
