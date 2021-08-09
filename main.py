@@ -1,6 +1,7 @@
 from flask import request, make_response, redirect, render_template, url_for, session
 from app import create_app
 from app.forms import LoginForm
+from app.firestore_service import get_users, get_todos
 import unittest
 
 
@@ -10,7 +11,6 @@ def test():
     tests = unittest.TestLoader().discover('tests')
     unittest.TextTestRunner().run(tests)
 
-todos = ['ver el curso', 'revisar email', 'leer docs']
 
 @app.errorhandler(404)
 def not_found(error):
@@ -23,15 +23,21 @@ def index():
     session['user_ip'] = user_ip
     return response
 
-@app.route('/hello')
+@app.route('/hello', methods=['GET'])
 def hello():
     user_ip = session.get('user_ip')
     username = session.get('username')
+
     context = {
-        'user_ip':user_ip, 
-        'todos':todos,
+        'user_ip': user_ip,
+        'todos': get_todos(username),
         'username': username
     }
+    users = get_users()
+
+    for user in users:
+        print(user.id)
+        print(user.to_dict()['password'])
 
     return render_template('file.html', **context)
 

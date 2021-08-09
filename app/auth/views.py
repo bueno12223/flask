@@ -2,7 +2,7 @@ from app.forms import LoginForm
 from flask import render_template, redirect, session, flash, url_for
 from . import auth
 
-@auth.route('/login', methods=[ 'GET', 'POST'])
+@auth.route('/login', methods=['GET', 'POST'])
 def login():
     login_form = LoginForm()
     context = {
@@ -13,5 +13,5 @@ def login():
         session['username'] = username
         flash('Nombre de usuario registrado')
         return redirect(url_for('index'))
-
+        
     return render_template('login.html', **context)
