@@ -5,7 +5,7 @@ from flask import current_app, url_for
 class MainTest(TestCase):
     def create_app(self):
         app.config['TESTING'] = True
-        app.config['WTF_CSR_ENABLED'] = False
+        app.config['WTF_CSRF_ENABLED'] = False
 
         return app
     def test_app_exist(self):
