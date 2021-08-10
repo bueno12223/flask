@@ -10,9 +10,13 @@
     {% if username %}
         <h1>Bienvenido {{username | capitalize }}</h1>
     {% endif %}
+    <h2>Añadir lista</h2>
+    <div class="container">
+        {{ wtf.quick_form(todo_form) }}
+    </div>
     <ul>
         {% for todo in todos %}
-            {{macros.render_todo(todo)}}
+            {{macros.render_todo(todo, delete_form, update_form)}}
         {% endfor %}
     </ul>
 

@@ -14,7 +14,6 @@ def login():
     if login_form.validate_on_submit():
         username = login_form.username.data
         password = login_form.password.data
-
         user_doc = get_user(username)
         if user_doc.to_dict() is not None:
             password_db = user_doc.to_dict()['password']
